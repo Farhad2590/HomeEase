@@ -1,0 +1,45 @@
+{
+  "_id": {
+    "$oid": "6768176c03c17a96180381d6"
+  },
+  "transactionId": "pi_3QYpQgCDA6WzUssx1tvV2c7V",
+  "amount": "262.00",
+  "address": "Chittagong ,Agrabad",
+  "deliveryCharge": {
+    "$numberInt": "100"
+  },
+  "orderDate": "2024-12-22T13:42:44.461Z",
+  "products": [
+    {
+      "productId": "6768171303c17a96180381d4",
+      "productImage": "https://i.ibb.co.com/ngWBSH1/Product19.jpg",
+      "productName": "Magnifying Glass",
+      "totalPrice": {
+        "$numberInt": "12"
+      },
+      "unitPrice": {
+        "$numberInt": "12"
+      },
+      "quantity": {
+        "$numberInt": "1"
+      }
+    },
+    {
+      "productId": "6768171c03c17a96180381d5",
+      "productImage": "https://i.ibb.co.com/ngWBSH1/Product19.jpg",
+      "productName": "Magnifying Glass",
+      "totalPrice": {
+        "$numberInt": "204"
+      },
+      "unitPrice": {
+        "$numberInt": "12"
+      },
+      "quantity": {
+        "$numberInt": "17"
+      }
+    }
+  ],
+  "email": "mohammadyonus629@gmail.com",
+  "name": "Mohammad Yonus",
+  "deliveryStatus" : "Processing"
+}
