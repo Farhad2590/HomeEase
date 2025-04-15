@@ -9,6 +9,6 @@ router.post('/', userController.createUser);
 router.delete('/:id', userController.deleteUser);
 router.put('/updateUserRole/:email', userController.updateUserRole);
 router.get('/admin/:email', userController.checkAdminStatus);
-router.get('/writer/:email', userController.checkWriterStatus);
+router.get('/provider/:email', userController.checkProviderStatus);
 
 module.exports = router;

@@ -45,10 +45,10 @@ class UserModel {
     return { admin: user?.role === 'admin' };
   }
 
-  static async checkWriterStatus(email) {
+  static async checkProviderStatus(email) {
     const collection = await this.getCollection();
     const user = await collection.findOne({ email });
-    return { writer: user?.role === 'writer' };
+    return { provider: user?.role === 'provider' };
   }
 }
 

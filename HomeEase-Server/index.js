@@ -8,7 +8,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const { connectToDatabase } = require('./config/db');
 
 const app = express();
-const port = process.env.PORT || 1293;
+const port = process.env.PORT || 9000;
 
 // Middleware
 const corsOptions = {

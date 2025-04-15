@@ -70,10 +70,10 @@ const userController = {
     }
   },
 
-  checkWriterStatus: async (req, res) => {
+  checkProviderStatus: async (req, res) => {
     try {
       const email = req.params.email;
-      const result = await UserModel.checkWriterStatus(email);
+      const result = await UserModel.checkProviderStatus(email);
       res.send(result);
     } catch (error) {
       res.status(500).send({ error: error.message });

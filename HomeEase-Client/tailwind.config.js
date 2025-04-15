@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        customBlue: '#68b5c2',
+      },
       keyframes: {
         wave: {
           '0%, 100%': { transform: 'translateX(0)' },
