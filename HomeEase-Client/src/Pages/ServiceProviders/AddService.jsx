@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import useAuth from '../../hooks/useAuth';
 
 const AddServiceForm = () => {
+  const { user } = useAuth();
+
+  
   const [formData, setFormData] = useState({
     name: '',
     category: '',
     description: '',
     price: '',
     duration: '',
-    rating: 0,
-    serviceProvider: '',
+    rating: [],
+    email: '',
     image: '',
     features: [],
     isPopular: false,
@@ -20,6 +24,28 @@ const AddServiceForm = () => {
   const [featureInput, setFeatureInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(false);
+  const [categoriesError, setCategoriesError] = useState(null);
+
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setCategoriesLoading(true);
+      try {
+        const response = await axios.get("http://localhost:9000/categories");
+        setCategories(response.data);
+        setCategoriesError(null);
+      } catch (err) {
+        setCategoriesError("Failed to fetch categories. Please try again.");
+        console.error("Error fetching categories:", err);
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -56,11 +82,13 @@ const AddServiceForm = () => {
     const serviceData = {
       ...formData,
       price: Number(formData.price),
-      rating: Number(formData.rating)
+      rating: formData.rating,
+      reviews: formData.reviews,
+      email : user.email,
     };
     
     try {
-      const response = await axios.post('/services', serviceData);
+      const response = await axios.post('http://localhost:9000/services', serviceData);
       console.log(response);
       toast("Service added successfully!")
       setMessage('Service added successfully!');
@@ -71,8 +99,8 @@ const AddServiceForm = () => {
         description: '',
         price: '',
         duration: '',
-        rating: 0,
-        serviceProvider: '',
+        rating: [],
+        email: '',
         image: '',
         features: [],
         isPopular: false,
@@ -122,15 +150,24 @@ const AddServiceForm = () => {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
+            disabled={categoriesLoading}
           >
             <option value="">Select Category</option>
-            <option value="Cleaning">Cleaning</option>
-            <option value="Repair">Repair</option>
-            <option value="Installation">Installation</option>
-            <option value="Maintenance">Maintenance</option>
-            <option value="Consultation">Consultation</option>
-            <option value="Other">Other</option>
+            {categoriesLoading ? (
+              <option>Loading categories...</option>
+            ) : categoriesError ? (
+              <option>Error loading categories</option>
+            ) : (
+              categories.map((category) => (
+                <option key={category._id} value={category.name}>
+                  {category.name}
+                </option>
+              ))
+            )}
           </select>
+          {categoriesError && (
+            <p className="text-red-500 text-xs mt-1">{categoriesError}</p>
+          )}
         </div>
         
         <div className="mb-4">
@@ -178,40 +215,6 @@ const AddServiceForm = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               placeholder="e.g. 2 hours"
-            />
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="rating">
-              Initial Rating
-            </label>
-            <input
-              type="number"
-              id="rating"
-              name="rating"
-              value={formData.rating}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              min="0"
-              max="5"
-              step="0.1"
-            />
-          </div>
-          
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="serviceProvider">
-              Service Provider Name *
-            </label>
-            <input
-              type="text"
-              id="serviceProvider"
-              name="serviceProvider"
-              value={formData.serviceProvider}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
             />
           </div>
         </div>
