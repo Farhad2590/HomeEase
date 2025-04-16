@@ -25,6 +25,26 @@ const serviceController = {
     }
   },
 
+  getServiceByEmail: async (req, res) => {
+    try {
+      const email = req.params.email;
+      const result = await ServiceModel.getServicesByEmail(email);
+      // console.log('Email:', email, 'Result:', result);
+      
+      if (result && result.length > 0) {  // Check for array length
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: "No services found for this email" });
+      }
+    } catch (error) {
+      console.error("Error fetching services:", error);
+      res.status(500).json({ 
+        error: "Internal Server Error",
+        details: error.message 
+      });
+    }
+  },
+
   createService: async (req, res) => {
     try {
       const service = req.body;

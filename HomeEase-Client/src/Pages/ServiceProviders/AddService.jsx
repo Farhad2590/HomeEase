@@ -6,7 +6,6 @@ import useAuth from '../../hooks/useAuth';
 const AddServiceForm = () => {
   const { user } = useAuth();
 
-  
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -19,6 +18,7 @@ const AddServiceForm = () => {
     features: [],
     isPopular: false,
     reviews: [],
+    location: '',
   });
   
   const [featureInput, setFeatureInput] = useState('');
@@ -28,7 +28,6 @@ const AddServiceForm = () => {
   const [categoriesLoading, setCategoriesLoading] = useState(false);
   const [categoriesError, setCategoriesError] = useState(null);
 
-  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       setCategoriesLoading(true);
@@ -78,21 +77,18 @@ const AddServiceForm = () => {
     setLoading(true);
     setMessage('');
     
-    // Convert price to number for database
     const serviceData = {
       ...formData,
       price: Number(formData.price),
       rating: formData.rating,
       reviews: formData.reviews,
-      email : user.email,
+      email: user.email,
     };
     
     try {
       const response = await axios.post('http://localhost:9000/services', serviceData);
-      console.log(response);
-      toast("Service added successfully!")
+      toast.success("Service added successfully!");
       setMessage('Service added successfully!');
-      // Reset form
       setFormData({
         name: '',
         category: '',
@@ -104,9 +100,11 @@ const AddServiceForm = () => {
         image: '',
         features: [],
         isPopular: false,
-        reviews: []
+        reviews: [],
+        location: '',
       });
     } catch (error) {
+      toast.error(`Error: ${error.response?.data?.error || 'Something went wrong'}`);
       setMessage(`Error: ${error.response?.data?.error || 'Something went wrong'}`);
     } finally {
       setLoading(false);
@@ -231,6 +229,22 @@ const AddServiceForm = () => {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="https://example.com/images/service.jpg"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+            Location *
+          </label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+            placeholder="e.g. Chittagong"
           />
         </div>
         

@@ -12,8 +12,18 @@ class ServiceModel {
   }
 
   static async getServiceById(id) {
+    try {
+      const collection = await this.getCollection();
+      return collection.findOne({ _id: getObjectId(id) });
+    } catch (error) {
+      console.error('Invalid ID format:', id);
+      return null;
+    }
+  }
+
+  static async getServicesByEmail(email) {
     const collection = await this.getCollection();
-    return collection.findOne({ _id: getObjectId(id) });
+    return collection.find({ email }).toArray(); // Changed to find() + toArray()
   }
 
   static async createService(service) {

@@ -7,7 +7,7 @@ router.get('/', serviceController.getAllServices);
 
 // Get a single service by ID
 router.get('/:id', serviceController.getServiceById);
-
+router.get('/my/:email', serviceController.getServiceByEmail);
 // Create a new service
 router.post('/', serviceController.createService);
 

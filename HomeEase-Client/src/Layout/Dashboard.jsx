@@ -29,7 +29,7 @@ const Dashboard = () => {
     { name: 'User Management', path: '/dashboard/all-users', icon: <FaUsers /> },
     // { name: 'Provider Management', path: '/dashboard/manage-providers', icon: <FaUserCog /> },
     { name: 'Category Management', path: '/dashboard/manage-categories', icon: <FaList /> },
-    { name: 'Pricing Management', path: '/dashboard/manage-pricing', icon: <FaDollarSign /> },
+    { name: 'Services Management', path: '/dashboard/manage-services', icon: <FaDollarSign /> },
     // { name: 'Commission Settings', path: '/dashboard/commission-settings', icon: <FaPercentage /> },
     // { name: 'Revenue Analytics', path: '/dashboard/revenue-analytics', icon: <FaChartLine /> },
     // { name: 'Dispute Resolution', path: '/dashboard/dispute-resolution', icon: <FaGavel /> },

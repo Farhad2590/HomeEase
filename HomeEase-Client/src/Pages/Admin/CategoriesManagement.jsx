@@ -7,7 +7,7 @@ const CategoriesManagement = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAddModal, setShowAddModal] = useState(false);
+  // const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
 
@@ -47,10 +47,10 @@ const CategoriesManagement = () => {
     }
   };
 
-  const handleAddSuccess = () => {
-    setShowAddModal(false);
-    fetchCategories();
-  };
+  // const handleAddSuccess = () => {
+  //   setShowAddModal(false);
+  //   fetchCategories();
+  // };
 
   const handleEditSuccess = () => {
     setShowEditModal(false);
@@ -65,7 +65,7 @@ const CategoriesManagement = () => {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Categories Management</h1>
         <button
-          onClick={() => setShowAddModal(true)}
+          // onClick={() => setShowAddModal(true)}
           className="bg-customBlue hover:bg-customBlue text-white px-4 py-2 rounded"
         >
           Add New Category
@@ -136,14 +136,14 @@ const CategoriesManagement = () => {
         </table>
       </div>
 
-      {/* Add Category Modal */}
+      {/* Add Category Modal
       {showAddModal && (
         <AddCategoryModal
           onClose={() => setShowAddModal(false)}
           onSuccess={handleAddSuccess}
         />
       )}
-
+ */}
       {/* Edit Category Modal */}
       {showEditModal && currentCategory && (
         <EditCategoryModal
